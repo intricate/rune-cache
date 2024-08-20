@@ -1,0 +1,109 @@
+cabal-version:       3.4
+name:                rune-cache
+version:             0.1.0.0
+synopsis:            RuneScape 2 cache library.
+description:         RuneScape 2 cache library.
+author:              Luke Nadur
+maintainer:          Luke Nadur
+license:             Apache-2.0
+license-file:        LICENSE
+category:            Game
+build-type:          Simple
+extra-source-files:  README.md
+
+library
+  default-language:    Haskell2010
+  hs-source-dirs:      src
+  default-extensions:  DerivingStrategies
+                       GeneralizedNewtypeDeriving
+                       NamedFieldPuns
+                       NoImplicitPrelude
+                       OverloadedStrings
+
+  ghc-options:         -Wall
+                       -Wcompat
+                       -Wincomplete-record-updates
+                       -Wincomplete-uni-patterns
+                       -Wpartial-fields
+                       -Wredundant-constraints
+                       -Wunused-packages
+
+  exposed-modules:     Crypto.Cipher.Xtea
+                       RuneScape.Cache
+                       RuneScape.Cache.Archive
+                       RuneScape.Cache.Archive.Settings
+                       RuneScape.Cache.Block
+                       RuneScape.Cache.Compression
+                       RuneScape.Cache.Container
+                       RuneScape.Cache.Container.Encryption
+                       RuneScape.Cache.DiskStore
+                       RuneScape.Cache.File
+                       RuneScape.Cache.File.Settings
+                       RuneScape.Cache.Group
+                       RuneScape.Cache.Group.Id
+                       RuneScape.Cache.Group.Settings
+                       RuneScape.Cache.Index
+
+  other-modules:       Data.Binary.Get.Delta
+                       Data.Binary.Get.Word24
+                       Data.Conduit.Serialization.Binary.Extra
+                       Data.Hash.Djb2
+                       Data.Tuple.Extra
+                       Data.Word.Smart
+
+  build-depends:       base >= 4.14 && < 5
+                     , binary
+                     , bytestring
+                     , bzlib-conduit
+                     , conduit
+                     , conduit-extra
+                     , containers
+                     , crypton
+                     , directory
+                     , lzma-conduit
+                     , memory
+                     , path
+                     , safe-numeric
+                     , streaming-commons
+                     , transformers
+                     , transformers-except
+                     , word24
+
+executable rune-cache
+  default-language:    Haskell2010
+  hs-source-dirs:      app, test
+  main-is:             rune-cache.hs
+  build-depends:       base >= 4.14 && < 5
+
+test-suite rune-cache-test
+  default-language:    Haskell2010
+  type:                exitcode-stdio-1.0
+  main-is:             Spec.hs
+  hs-source-dirs:      test
+  default-extensions:  DerivingStrategies
+                       GeneralizedNewtypeDeriving
+                       NamedFieldPuns
+                       NoImplicitPrelude
+                       OverloadedStrings
+
+  ghc-options:         -Wall
+                       -Werror
+                       -Wcompat
+                       -Wredundant-constraints
+                       -Wincomplete-patterns
+                       -Wincomplete-record-updates
+                       -Wincomplete-uni-patterns
+                       -Wunused-imports
+                       -Wunused-packages
+
+  other-modules:       Test.Crypto.Cipher.XteaSpec
+                       Test.Golden
+
+  build-depends:        base >= 4.14 && < 5
+                      , bytestring
+                      , hedgehog
+                      , hspec
+                      , hspec-hedgehog
+                      , rune-cache
+
+  build-tool-depends:  hspec-discover:hspec-discover
