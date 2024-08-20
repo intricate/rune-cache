@@ -255,10 +255,12 @@ unsafeAllocateDiskStore path = do
 releaseDiskStore :: DiskStore -> IO ()
 releaseDiskStore ds = do
   hClose dsDataFile
+  hClose dsMasterIndexFile
   mapM_ hClose dsIndexFiles
   where
     DiskStore
       { dsDataFile
+      , dsMasterIndexFile
       , dsIndexFiles
       } = ds
 
